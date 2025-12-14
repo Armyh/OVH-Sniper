@@ -1,0 +1,106 @@
+{
+  "_说明": "这是配置文件示例，使用前请复制为 config.json 并填入你的 API 凭据",
+
+  "monitor": {
+    "_说明_check_interval": "库存检查间隔（秒）- 每隔几秒检查一次库存",
+    "check_interval": 5,
+
+    "_说明_check_concurrency": "检查并发数 - 每个账户同时检查几个目标（避免请求过多）",
+    "check_concurrency": 3,
+
+    "_说明_order_concurrency": "下单并发数 - 发现有货后，同时下几个订单",
+    "order_concurrency": 10,
+
+    "_说明_random_delay": "随机延迟（毫秒）- 每次检查前随机等待，避免被 API 限流",
+    "random_delay_min": 100,
+    "random_delay_max": 500
+  },
+
+  "telegram": {
+    "_说明": "Telegram 通知配置 - 从 @BotFather 获取 bot_token，chat_id 是你的用户 ID",
+    "enabled": false,
+    "bot_token": "",
+    "chat_id": ""
+  },
+
+  "accounts": [
+    {
+      "_说明": "====== 账户 1：主账户 ======",
+      "name": "主账户",
+      "_说明_endpoint": "OVH API 端点: ovh-eu(欧洲), ovh-ca(加拿大), ovh-us(美国)",
+      "endpoint": "ovh-eu",
+      "_说明_api": "从 OVH API 页面获取: https://eu.api.ovh.com/createToken/",
+      "app_key": "YOUR_APP_KEY",
+      "app_secret": "YOUR_APP_SECRET",
+      "consumer_key": "YOUR_CONSUMER_KEY",
+      "_说明_ovh_subsidiary": "OVH子公司代码，决定价格/税率/服务条款。常用: IE(爱尔兰), FR(法国), DE(德国), ES(西班牙), GB(英国), IT(意大利), NL(荷兰), PL(波兰), PT(葡萄牙), CA(加拿大), US(美国)等",
+      "ovh_subsidiary": "IE",
+      "enabled": true,
+
+      "targets": [
+        {
+          "_说明": "--- 目标 1：默认配置 ---",
+          "name": "KS-LE-B 默认配置",
+          "_说明_plan_code": "产品代码，在 OVH 官网查看",
+          "plan_code": "26skleb01-v1",
+          "_说明_datacenters": "机房列表: rbx=鲁贝, gra=格拉夫林, sbg=斯特拉斯堡, 空数组=所有机房",
+          "datacenters": ["rbx", "gra"],
+          "_说明_auto_order": "是否自动下单: true=自动抢购, false=只监控通知",
+          "auto_order": true,
+          "_说明_quantity": "有货时抢购数量",
+          "quantity": 1,
+          "_说明_options": "硬件配置选项，空数组表示默认配置",
+          "options": []
+        },
+
+        {
+          "_说明": "--- 目标 2：NVMe 高配 ---",
+          "name": "KS-LE-B NVMe 高配",
+          "plan_code": "26skleb01-v1",
+          "datacenters": [],
+          "auto_order": true,
+          "quantity": 2,
+          "_说明_options_详细": "硬件升级选项：带宽/内存/存储等",
+          "options": [
+            "bandwidth-500-26skle",
+            "ram-32g-ecc-2400-26skleb01-v1",
+            "softraid-2x450nvme-26skleb01-v1"
+          ]
+        },
+
+        {
+          "_说明": "--- 目标 3：只监控不下单 ---",
+          "name": "只监控示例",
+          "plan_code": "26skleb01-v1",
+          "datacenters": ["rbx"],
+          "auto_order": false,
+          "quantity": 1,
+          "options": []
+        }
+      ]
+    },
+
+    {
+      "_说明": "====== 账户 2：备用账户（已禁用）======",
+      "name": "备用账户",
+      "endpoint": "ovh-eu",
+      "app_key": "ANOTHER_APP_KEY",
+      "app_secret": "ANOTHER_APP_SECRET",
+      "consumer_key": "ANOTHER_CONSUMER_KEY",
+      "ovh_subsidiary": "FR",
+      "_说明_enabled": "设为 false 暂时禁用该账户",
+      "enabled": false,
+
+      "targets": [
+        {
+          "name": "备用目标",
+          "plan_code": "26skleb01-v1",
+          "datacenters": ["gra"],
+          "auto_order": true,
+          "quantity": 1,
+          "options": []
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,43 @@
+{
+  "monitor": {
+    "check_interval": 5,
+    "check_concurrency": 3,
+    "order_concurrency": 10,
+    "random_delay_min": 100,
+    "random_delay_max": 500
+  },
+  "telegram": {
+    "enabled": false,
+    "bot_token": "",
+    "chat_id": ""
+  },
+  "accounts": [
+    {
+      "name": "主账户",
+      "endpoint": "ovh-eu",
+      "app_key": "YOUR_APP_KEY",
+      "app_secret": "YOUR_APP_SECRET",
+      "consumer_key": "YOUR_CONSUMER_KEY",
+      "ovh_subsidiary": "go-ovh-ie",
+      "enabled": true,
+      "targets": [
+        {
+          "name": "示例1: KS-2",
+          "plan_code": "24sk202",
+          "datacenters": [],
+          "auto_order": true,
+          "quantity": 50,
+          "options": []
+        },
+        {
+          "name": "示例1: KS-LE-B",
+          "plan_code": "26skleb01-v1",
+          "datacenters": [],
+          "auto_order": true,
+          "quantity": 20,
+          "options": []
+        }
+      ]
+    }
+  ]
+}
